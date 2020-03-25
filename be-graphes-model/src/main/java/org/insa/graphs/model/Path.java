@@ -30,13 +30,36 @@ public class Path {
      * @throws IllegalArgumentException If the list of nodes is not valid, i.e. two
      *         consecutive nodes in the list are not connected in the graph.
      * 
-     * @deprecated Need to be implemented.
      */
     public static Path createFastestPathFromNodes(Graph graph, List<Node> nodes)
             throws IllegalArgumentException {
-        List<Arc> arcs = new ArrayList<Arc>();
-        // TODO:
-        return new Path(graph, arcs);
+    	 Arc currentArc = null;
+         List<Arc> arcs = new ArrayList<Arc>();
+         double time = 999999;
+         
+         if(nodes.size() == 0) {
+             return new Path(graph);
+         }
+         if(nodes.size() == 1) {
+             return new Path(graph, nodes.get(0) );
+         }
+         
+         for(int i=0; i<nodes.size()-1;i++) {
+             for(Arc a : nodes.get(i).getSuccessors()) {
+                 if(a.getMinimumTravelTime() < time && a.getDestination().equals(nodes.get(i+1))  ) {
+                     currentArc = a;
+                     time = a.getLength();
+                 }
+             }
+             if(currentArc == null) {
+                 throw new IllegalArgumentException();
+             }    
+             arcs.add(currentArc);
+             time = 9999;
+             currentArc = null;
+         }
+           
+         return new Path(graph, arcs);
     }
 
     /**
@@ -54,8 +77,36 @@ public class Path {
      */
     public static Path createShortestPathFromNodes(Graph graph, List<Node> nodes)
     		throws IllegalArgumentException {
+       
+    	  
+        Arc currentArc = null;
         List<Arc> arcs = new ArrayList<Arc>();
+        double lenght = 999999;
+        
+        if(nodes.size() == 0) {
+            return new Path(graph);
+        }
+        if(nodes.size() == 1) {
+            return new Path(graph, nodes.get(0) );
+        }
+        
+        for(int i=0; i<nodes.size()-1;i++) {
+            for(Arc a : nodes.get(i).getSuccessors()) {
+                if(a.getLength() < lenght && a.getDestination().equals(nodes.get(i+1))  ) {
+                    currentArc = a;
+                    lenght = a.getLength();
+                }
+            }
+            if(currentArc == null) {
+                throw new IllegalArgumentException();
+            }    
+            arcs.add(currentArc);
+            lenght = 9999;
+            currentArc = null;
+        }
+          
         return new Path(graph, arcs);
+    	
     }
 
     /**
