@@ -47,7 +47,7 @@ public class Launch {
     public static void main(String[] args) throws Exception {
 
         // Visit these directory to see the list of available files on Commetud.
-        final String mapName = "C:\\Users\\titip\\Desktop\\Bee graph\\insa.mapgr";
+        final String mapName = "C:\\Users\\titip\\Desktop\\Bee graph\\carre.mapgr";
         final String pathName = "C:\\Users\\titip\\Desktop\\Bee graph\\path_fr31insa_rangueil_r2.path";
 
         // Create a graph reader.
