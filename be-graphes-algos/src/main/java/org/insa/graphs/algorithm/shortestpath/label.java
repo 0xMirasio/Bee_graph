@@ -24,6 +24,10 @@ public class label implements Comparable<label> {
 	public double getCost() {
 		return this.cout;
 	}
+	public double getTotalCost() {
+		return this.cout;
+	}
+	
 	public void actualiseMarque(boolean change) {
 		this.marque = change;
 	}
@@ -43,16 +47,12 @@ public class label implements Comparable<label> {
 		return this.pere;
 	}
 	
+	
 	public Node getCurrentNode() {
 		return this.sommet_courant;
 	}
 	public int compareTo(label other) {
-        if (this.cout - other.cout > 0) {
-        	return 1;
-        }
-        else {
-        	return 0;
-        }
+		return Double.compare(this.getTotalCost(), other.getTotalCost());
     }
 	
 	public int getSommetId() {
