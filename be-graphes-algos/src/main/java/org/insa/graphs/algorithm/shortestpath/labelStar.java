@@ -8,13 +8,13 @@ import org.insa.graphs.model.Graph;
 import org.insa.graphs.model.Node;
 import org.insa.graphs.model.Path;
 
-public class labelStar extends label implements Comparable<label> {
+public class labelStar extends label {
 
 	private double cout_estime;
 	
-	public labelStar(double cout, Node sommet_courant, Arc pere) {
+	public labelStar(double cout, Node sommet_courant, Arc pere, double cout_es) {
 		super(cout,sommet_courant,pere);
-		this.cout_estime = cout_estime;
+		this.cout_estime =  cout_es;
 	}
 	
 	public double giveCoutEstime() {
@@ -26,6 +26,10 @@ public class labelStar extends label implements Comparable<label> {
 		return this.getCost() + this.cout_estime;
 	}
 	
+	@Override
+	public int compareTo(label other) {
+		return Double.compare(this.getTotalCost(), other.getTotalCost());
+    }
 	public void actualiseCoutEstime(double value) {
 		this.cout_estime = value;
 	}

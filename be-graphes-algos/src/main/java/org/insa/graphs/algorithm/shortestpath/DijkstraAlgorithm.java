@@ -50,6 +50,9 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         	cur.actualiseMarque(true);
         	
         	for (Arc arc : cur.getCurrentNode().getSuccessors()) {
+        		if (!data.isAllowed(arc)) {
+        			continue;
+        		}
         		after = lpm[arc.getDestination().getId()];
         		if (after ==null) {
         			after = new label(cur.getCost() + data.getCost(arc) , arc.getDestination(), arc);
