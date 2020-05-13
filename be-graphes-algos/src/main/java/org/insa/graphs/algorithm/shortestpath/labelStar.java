@@ -17,10 +17,6 @@ public class labelStar extends label {
 		this.cout_estime =  cout_es;
 	}
 	
-	public double giveCoutEstime() {
-		return this.cout_estime;
-	}
-	
 	@Override
 	public double getTotalCost() {
 		return this.getCost() + this.cout_estime;
@@ -30,9 +26,7 @@ public class labelStar extends label {
 	public int compareTo(label other) {
 		return Double.compare(this.getTotalCost(), other.getTotalCost());
     }
-	public void actualiseCoutEstime(double value) {
-		this.cout_estime = value;
-	}
+	
 
 
 }

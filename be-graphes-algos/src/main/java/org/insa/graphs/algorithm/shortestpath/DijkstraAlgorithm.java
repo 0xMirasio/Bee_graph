@@ -48,7 +48,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         	cur = labheap.findMin();
         	labheap.remove(cur);
         	cur.actualiseMarque(true);
-        	
+        	cout_ancien.add(cur.getCost()); // on sauvegarde le cout des labels pour des test.
         	for (Arc arc : cur.getCurrentNode().getSuccessors()) {
         		if (!data.isAllowed(arc)) {
         			continue;
@@ -56,7 +56,6 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         		after = lpm[arc.getDestination().getId()];
         		if (after ==null) {
         			after = new label(cur.getCost() + data.getCost(arc) , arc.getDestination(), arc);
-        			cout_ancien.add(after.getCost()); // on sauvegarde le cout des labels pour des test.
         			lpm[arc.getDestination().getId()] = after;
         			notifyNodeReached(arc.getDestination());
         			labheap.insert(after);
@@ -65,6 +64,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         			if (after.getCost() > cur.getCost() + data.getCost(arc)) {
         				after.ActualiseCost(cur.getCost() + data.getCost(arc));
         				after.ActualisePapa(arc);
+        				
         			}
         			        	
         		}

@@ -47,20 +47,15 @@ public class AStarAlgorithm extends DijkstraAlgorithm {
         	cur = labheap.findMin();
         	labheap.remove(cur);
         	cur.actualiseMarque(true);
-        	
+        	cout_ancien.add(cur.getTotalCost()); // on sauvegarde le cout des labels pour des test.
         	for (Arc arc : cur.getCurrentNode().getSuccessors()) {
         		after = lpm[arc.getDestination().getId()];
         		if (!data.isAllowed(arc)) {
         			continue;
         		}
         		if (after ==null) {
-        			double min =  data.getDestination().getPoint().distanceTo(arc.getPoints().get(0));
-        			for (int i=0; i<arc.getPoints().size(); i++) {
-        				if (data.getDestination().getPoint().distanceTo(arc.getPoints().get(i)) < min);
-        					min = data.getDestination().getPoint().distanceTo(arc.getPoints().get(i));
-        			}
+        			double min =  data.getDestination().getPoint().distanceTo(arc.getDestination().getPoint());
         			after = new labelStar(cur.getCost() + data.getCost(arc) , arc.getDestination(), arc, min);
-        			cout_ancien.add(cur.getCost() + data.getCost(arc)); // on sauvegarde le cout des labels pour des test.
         			lpm[arc.getDestination().getId()] = after;
         			notifyNodeReached(arc.getDestination());
         			labheap.insert(after);
@@ -96,12 +91,12 @@ public class AStarAlgorithm extends DijkstraAlgorithm {
         	
         	// TEST Section --------------------------------------------------------
         	
-        	// le cout des labels est-il croissant ? 
+        	// le cout des labels est-il croissant ? // problème non résolu pour le moment, soucis -> ?
         	double min = cout_ancien.get(0);
         	int err=0;
         	for (int i=0; i<cout_ancien.size()-1; i++) {
-        		
-        		if( cout_ancien.get(i) < min) {
+        		//System.out.println(cout_ancien.get(i));
+        		if( cout_ancien.get(i) <= min) {
         			err= 1;
         		}
         	}
