@@ -12,9 +12,10 @@ public class labelStar extends label {
 
 	private double cout_estime;
 	
-	public labelStar(double cout, Node sommet_courant, Arc pere, double cout_es) {
+	public labelStar(double cout, Node sommet_courant, Arc pere, Node dest) {
 		super(cout,sommet_courant,pere);
-		this.cout_estime =  cout_es;
+		this.cout_estime =  sommet_courant.getPoint().distanceTo(dest.getPoint());
+		//this.cout_estime = 0; 
 	}
 	
 	@Override
@@ -22,10 +23,18 @@ public class labelStar extends label {
 		return this.getCost() + this.cout_estime;
 	}
 	
-	@Override
-	public int compareTo(label other) {
-		return Double.compare(this.getTotalCost(), other.getTotalCost());
-    }
+	public double getEstimatedCost() {
+		return this.cout_estime;
+	}
+	
+	 @Override
+	    public int compareTo(label second) {
+	        labelStar other = (labelStar) second;
+	        if (Double.compare(this.getTotalCost(), other.getTotalCost()) == 0) {
+	            return Double.compare(this.getEstimatedCost(), other.getEstimatedCost());
+	        }
+	        return Double.compare(this.getTotalCost(), other.getTotalCost());
+	    }
 	
 
 

@@ -257,18 +257,12 @@ public class Path {
     	}
     	if (this.origin == this.getArcs().get(0).getOrigin()) {
     		{
-    			int valid = 0;
     			for(int i=0; i< this.getArcs().size() -1 ; i++) {
-    				if (this.getArcs().get(i).getDestination() == this.getArcs().get(i+1).getOrigin()) {
-    					valid = 1;
-    				}
-    				else {
+    				if (this.getArcs().get(i).getDestination() != this.getArcs().get(i+1).getOrigin()) {
     					return false;
     				}
     			}
-    			if (valid == 1) {
-    				return true;
-    			}
+    			return true;
     		}
     		
     	}

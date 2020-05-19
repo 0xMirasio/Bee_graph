@@ -14,6 +14,8 @@ public class label implements Comparable<label> {
 	private double cout;
 	private Arc pere;
 	private Node sommet_courant;
+	private static int cpt = 1;
+	private int id = cpt++;
     
 	public label(double cout, Node sommet_courant, Arc pere) {
 		this.cout = cout;
@@ -31,7 +33,7 @@ public class label implements Comparable<label> {
 	public void actualiseMarque(boolean change) {
 		this.marque = change;
 	}
-	public boolean hasFinish() {
+	public boolean isMarque() {
 		return this.marque;
 	}
 	
@@ -57,6 +59,10 @@ public class label implements Comparable<label> {
 	
 	public int getSommetId() {
 		return this.sommet_courant.getId();
+	}
+	
+	public String toString() {
+		return "# "+this.id + " :"+ this.sommet_courant.getId() + ":"  + this.marque;
 	}
 
 }

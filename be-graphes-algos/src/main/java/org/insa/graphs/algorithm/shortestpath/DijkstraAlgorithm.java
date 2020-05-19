@@ -16,6 +16,17 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
     public DijkstraAlgorithm(ShortestPathData data) {
         super(data);
     }
+    
+    public label[] initTab(int nbNode, Node base) {
+    	label[] res=  new label[nbNode];
+    	res[base.getId()] = new label(0,base,null);
+    	return res;
+    	
+    }
+    
+    public label createAfter(double cout, Node dest, Arc cur) {
+    	return new label(cout, dest, cur);
+    }
 
     @Override
     protected ShortestPathSolution doRun() {
@@ -27,49 +38,57 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         // constant
         final int nbNode = graph.size();
         Node base = data.getOrigin();
-        PriorityQueue<label>labheap = new BinaryHeap<>();
-        label lpm[] = new label[nbNode];
+        BinaryHeap<label>labheap = new BinaryHeap<>();
+        label lpm[] = this.initTab(nbNode, base);
         label cur,after;
         notifyOriginProcessed(data.getOrigin());
         ArrayList<Double> cout_ancien = new ArrayList<>();  //pour faire des test
          
         // algorithm
-        
-        for (int i=0; i< lpm.length ; i++ ) {
-        	lpm[i] = null;
-        }
-        
-        
-        lpm[base.getId()] = new label(0,base,null);
+              
         labheap.insert(lpm[base.getId()]);
         
         // main
-        while(!labheap.isEmpty() && (lpm[data.getDestination().getId()] == null || !lpm[data.getDestination().getId()].hasFinish())) {
-        	cur = labheap.findMin();
-        	labheap.remove(cur);
+        while(!labheap.isEmpty() && (lpm[data.getDestination().getId()] == null || !lpm[data.getDestination().getId()].isMarque())) {
+
+        	cur = labheap.deleteMin();
         	cur.actualiseMarque(true);
+
         	cout_ancien.add(cur.getCost()); // on sauvegarde le cout des labels pour des test.
         	for (Arc arc : cur.getCurrentNode().getSuccessors()) {
+        		
+        		int id_dest = arc.getDestination().getId();
+        		if (lpm[id_dest] != null && lpm[id_dest].isMarque()) {
+        			continue;
+        		}
+        		
         		if (!data.isAllowed(arc)) {
         			continue;
         		}
-        		after = lpm[arc.getDestination().getId()];
+        		
+        		after = lpm[id_dest];
         		if (after ==null) {
-        			after = new label(cur.getCost() + data.getCost(arc) , arc.getDestination(), arc);
-        			lpm[arc.getDestination().getId()] = after;
+        			after = this.createAfter(cur.getCost() + data.getCost(arc), arc.getDestination(),arc);
+        			lpm[id_dest] = after;
         			notifyNodeReached(arc.getDestination());
         			labheap.insert(after);
         		}
+        		
         		else {
         			if (after.getCost() > cur.getCost() + data.getCost(arc)) {
         				after.ActualiseCost(cur.getCost() + data.getCost(arc));
         				after.ActualisePapa(arc);
+        				labheap.remove(after);
+        				labheap.insert(after); // actualise la position dans le tas
+        				
         				
         			}
+        			
         			        	
         		}
-        	
+        		
         	}
+        	
         }
         
         if (lpm[data.getDestination().getId()] == null) {
@@ -117,11 +136,11 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
             
             // le cout est-il valide ?
             double lenght = newPath.getLength();
-            if (Math.round(lpm[data.getDestination().getId()].getCost()) == Math.round(lenght)) {
+            if (Math.abs(lpm[data.getDestination().getId()].getCost() - lenght) < 1e-2) {
             	System.out.println("Cout valide!");	
             }
             else {
-            	System.out.println("Cout invalide!" + Math.round(lenght) + "=!"+Math.round(lpm[data.getDestination().getId()].getCost()));	
+            	System.out.println("Cout invalide!" +lenght + "=!"+lpm[data.getDestination().getId()].getCost());	
             }
         
         }
