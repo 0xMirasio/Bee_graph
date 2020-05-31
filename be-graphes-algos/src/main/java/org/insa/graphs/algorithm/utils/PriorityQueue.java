@@ -18,7 +18,6 @@ public interface PriorityQueue<E extends Comparable<E>> {
      * @return true if the queue is empty, false otherwise.
      */
     public boolean isEmpty();
-
     /**
      * Get the number of elements in this queue.
      * 
@@ -28,6 +27,9 @@ public interface PriorityQueue<E extends Comparable<E>> {
      * 
      * @return Current size (number of elements) of this queue.
      */
+    public  boolean contains(E x);
+    // return true if the element is inside.
+    //false if not
     public int size();
 
     /**
@@ -77,5 +79,7 @@ public interface PriorityQueue<E extends Comparable<E>> {
      * @throws EmptyPriorityQueueException if this queue is empty.
      */
     public E deleteMin() throws EmptyPriorityQueueException;
+
+	public boolean isValid();
 
 }

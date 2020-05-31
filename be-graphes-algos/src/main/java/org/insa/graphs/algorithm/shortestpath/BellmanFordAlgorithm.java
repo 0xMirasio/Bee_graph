@@ -15,9 +15,13 @@ public class BellmanFordAlgorithm extends ShortestPathAlgorithm {
     public BellmanFordAlgorithm(ShortestPathData data) {
         super(data);
     }
-
+    
+    ArrayList<Double> cout_ancien = new ArrayList<>(); 
+    double cost = 0;
+    boolean tas_err = true;
+    
     @Override
-    protected ShortestPathSolution doRun() {
+	public ShortestPathSolution doRun() {
 
         // Retrieve the graph.
         ShortestPathData data = getInputData();
@@ -41,6 +45,7 @@ public class BellmanFordAlgorithm extends ShortestPathAlgorithm {
         boolean found = false;
         for (int i = 0; !found && i < nbNodes; ++i) {
             found = true;
+            
             for (Node node: graph.getNodes()) {
                 for (Arc arc: node.getSuccessors()) {
 
@@ -91,7 +96,7 @@ public class BellmanFordAlgorithm extends ShortestPathAlgorithm {
             Collections.reverse(arcs);
 
             // Create the final solution.
-            solution = new ShortestPathSolution(data, Status.OPTIMAL, new Path(graph, arcs));
+            solution = new ShortestPathSolution(data, Status.OPTIMAL, new Path(graph, arcs), cout_ancien, cost, tas_err);
         }
 
         return solution;

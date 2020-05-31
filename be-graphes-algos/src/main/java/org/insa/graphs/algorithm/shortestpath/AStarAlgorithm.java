@@ -26,7 +26,7 @@ public class AStarAlgorithm extends DijkstraAlgorithm {
     }
     
     @Override
-    public label createAfter(double cout, Node som_c, Arc pere) {
+    public label createLabel(double cout, Node som_c, Arc pere) {
     	return new labelStar(cout, som_c, pere, getInputData().getDestination());
     }
     

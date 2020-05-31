@@ -5,6 +5,7 @@ import org.insa.graphs.model.Node;
 
 public abstract class ShortestPathAlgorithm extends AbstractAlgorithm<ShortestPathObserver> {
 
+	
     protected ShortestPathAlgorithm(ShortestPathData data) {
         super(data);
     }

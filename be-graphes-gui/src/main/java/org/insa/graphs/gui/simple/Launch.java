@@ -54,7 +54,7 @@ public class Launch {
         final GraphReader reader = new BinaryGraphReader(
                 new DataInputStream(new BufferedInputStream(new FileInputStream(mapName))));
 
-        // TODO: Read the graph.
+        // Read the graph.
         final Graph graph =reader.read();
 
 
