@@ -30,7 +30,7 @@ import org.junit.Test;
 public class AlgoTest {
 	
 	static Graph graph = null;
-	static final String mapName = "C:\\Users\\titip\\Desktop\\Bee graph\\insa.mapgr";
+	static final String mapName =  "C:\\Users\\titip\\Desktop\\INSA\\graphe\\Bee graph\\insa.mapgr";
 	static GraphReader reader;
 	static ShortestPathData data;
 	static final List<ArcInspector> filter =  ArcInspectorFactory.getAllFilters();
